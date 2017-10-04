@@ -1,0 +1,25 @@
+<html>
+<head>
+  <title>Web Share Button</title>
+</head>
+<body>
+	<button id="shareButton"> Share </button>
+	<script>
+		function share() {
+			var params = (new URL(document.location)).searchParams;
+			var url = params.get('url');
+			var title = params.get('title');
+			var text = params.get('text');
+			navigator.share({
+				url: url,
+				title: title,
+				text: text,
+			});
+		}
+
+		if (navigator.share) {
+			var button = document.querySelector('#shareButton');
+			button.addEventListener('click', share);
+		}
+	</script>
+</body>
