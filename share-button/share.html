@@ -63,11 +63,11 @@
       // Parameters
       //   url, title, text: Share content
       //   hide: Hide button if navigator.share is not supported.
-      		var params = (new URL(document.location)).searchParams;
+      var params = (new URL(document.location)).searchParams;
       var shareData =  {
-      			url: params.get('url') || undefined,
-      			title: params.get('title') || undefined,
-      			text: params.get('text') || undefined,
+        url: params.get('url') || undefined,
+        title: params.get('title') || undefined,
+        text: params.get('text') || undefined,
       };
       var hide = params.get('hide')
 
@@ -109,13 +109,9 @@
         document.body.removeChild(textArea);
       }
 
-  		function share() {
-  			navigator.share({
-  				url: url,
-  				title: title,
-  				text: text,
-  			});
-  		}
+      function share() {
+      	      navigator.share(shareData);
+      }
 
       function onClick() {
         if (navigator.share) {
@@ -125,9 +121,9 @@
         }
       }
 
-  		if (validShareData && (navigator.share || !hide)) {
-  			button.addEventListener('click', onClick);
-  			button.style.display = null;
-  		}
+      if (validShareData && (navigator.share || !hide)) {
+        button.addEventListener('click', onClick);
+        button.style.display = null;
+      }
     </script>
   </body>
