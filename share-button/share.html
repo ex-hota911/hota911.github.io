@@ -2,6 +2,10 @@
   <head>
     <title>Web Share Button</title>
     <style>
+      body {
+        margin: 0;
+        background-color: transparent;
+      }
       .button {
         border-radius: 3px;
         font-size: 11px;
@@ -69,7 +73,8 @@
         title: params.get('title') || undefined,
         text: params.get('text') || undefined,
       };
-      var hide = params.get('hide')
+      var hide = params.get('hide');
+      var showAlert = params.get('alert');
 
       var validShareData = shareData.url || shareData.title || shareData.text;
 
@@ -86,11 +91,12 @@
         textArea.style.boxShadow = 'none';
         textArea.style.background = 'transparent';
 
-        var text = [];
-        if (shareData.title) text.push(shareData.title);
-        if (shareData.text) text.push(shareData.text);
-        if (shareData.url) text.push(shareData.url);
-        textArea.value = text.join(' - ');
+        var texts = [];
+        if (shareData.title) texts.push(shareData.title);
+        if (shareData.text) texts.push(shareData.text);
+        if (shareData.url) texts.push(shareData.url);
+        var text = texts.join(' - ');
+        textArea.value = text;
 
         document.body.appendChild(textArea);
 
@@ -101,6 +107,17 @@
             var label = document.querySelector('.label');
             label.innerText = 'コピー済';
             button.className += ' copied';
+            if (showAlert) {
+              var w = screen.width/2;
+              var h = screen.height/2;
+              var left = screen.width/4;
+              var top = screen.height/4;
+              var win = window.open(
+                'about:blank',
+                'name',
+                'dialog=true,height=' + h + ',width=' + w + ',left=' + left + ',top=' + top);
+              win.document.body.innerText = '「' + text + '」 をコピーしました'
+            }
           }
         } catch (err) {
           console.log('Oops, unable to copy');
